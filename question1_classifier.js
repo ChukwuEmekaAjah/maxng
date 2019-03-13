@@ -7,15 +7,15 @@
 // we first convert their dates of birth to milliseconds to aid comparison
 let present_time = Date.now()
 let present_year = (new Date()).getFullYear()
-function get_age_milliseconds(students){
+// first create a new array with the student age
+function create_new_array(students){
   let output = students.map(function(student){
     return {name:student.name, regNo: student.regNo, dob:student.dob, age: present_year - (new Date(student.dob)).getFullYear()}
   })
   return output;
 }
 
-// next we sort the students according to their date of birth
-
+// sorting function for the students ages
 function sorting_function(student_a, student_b){
   if(student_a.age > student_b.age){
     return 1
@@ -29,7 +29,7 @@ function sorting_function(student_a, student_b){
 }
 
 
-
+// function to group students 
 function group_students(students){
   let number_of_milliseconds_in_five_years = 24*60*60*1000*365*5;
   let students_grouping = {};
@@ -76,7 +76,7 @@ function classifier(input) {
   	return {'noOfGroups':0}
   }
   
-  let students_with_age_in_milliseconds = get_age_milliseconds(input);
+  let students_with_age_in_milliseconds = create_new_array(input);
   let students_in_ascending_order = students_with_age_in_milliseconds.sort(sorting_function);
   let grouped_students = group_students(students_in_ascending_order);
   let number_of_groups = Object.keys(grouped_students).length;
